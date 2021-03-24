@@ -205,11 +205,19 @@ describe('useCart Hook', () => {
   });
 
   it('should not be able to increase a product amount when running out of stock', async () => {
-    const productId = 2;
+    const productId = 1;
+
+    apiMock.onGet(`products/${productId}`).reply(200, {
+      id: 1,
+      image:
+        'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
+      price: 179.9,
+      title: 'Tênis de Caminhada Leve Confortável',
+    });
 
     apiMock.onGet(`stock/${productId}`).reply(200, {
       id: 1,
-      amount: 1,
+      amount: 2,
     });
 
     const { result, waitFor } = renderHook(useCart, {
@@ -250,8 +258,8 @@ describe('useCart Hook', () => {
     expect(result.current.cart).toEqual(
       expect.arrayContaining([
         {
-          amount: 2,
           id: 1,
+          amount: 2,
           image:
             'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
           price: 179.9,

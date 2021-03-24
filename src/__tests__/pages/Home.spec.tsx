@@ -91,25 +91,12 @@ describe('Home Page', () => {
 
     fireEvent.click(addFirstProduct);
 
-    expect(mockedAddProduct).toHaveBeenCalledWith(1);
-
-    mockedUseCartHook.mockReturnValueOnce({
-      cart: [
-        {
-          amount: 3,
-          id: 1,
-          image:
-            'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
-          price: 179.9,
-          title: 'Tênis de Caminhada Leve Confortável',
-        },
-      ],
-    });
+    expect(mockedAddProduct).toHaveBeenCalled();
 
     rerender(<Home />);
 
     const [firstProductCartQuantity] = getAllByTestId('cart-product-quantity');
 
-    expect(firstProductCartQuantity).toHaveTextContent('3');
+    expect(firstProductCartQuantity).toHaveTextContent('2');
   });
 });
